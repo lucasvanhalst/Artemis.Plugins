@@ -6,6 +6,8 @@ using Artemis.Core;
 using Artemis.Core.DeviceProviders;
 using Artemis.Core.Services;
 using HidSharp;
+using RGB.NET.Core;
+using RGB.NET.Devices.Logitech;
 using Serilog;
 using Serilog.Events;
 
@@ -27,6 +29,11 @@ namespace Artemis.Plugins.Devices.Logitech
         {
             RGB.NET.Devices.Logitech.LogitechDeviceProvider.PossibleX64NativePaths.Add(Path.Combine(Plugin.Directory.FullName, "x64", "LogitechLedEnginesWrapper.dll"));
             RGB.NET.Devices.Logitech.LogitechDeviceProvider.PossibleX86NativePaths.Add(Path.Combine(Plugin.Directory.FullName, "x86", "LogitechLedEnginesWrapper.dll"));
+
+            RGB.NET.Devices.Logitech.LogitechDeviceProvider.PerZoneDeviceDefinitions.Add(
+                0xC53A, RGBDeviceType.Mousepad, "G PowerPlay Mousepad", LedMappings.ZoneMousepad, (LogitechDeviceType.Mousemat, 2)
+            );
+
             _rgbService.AddDeviceProvider(RgbDeviceProvider);
 
             if (_logger.IsEnabled(LogEventLevel.Debug))
